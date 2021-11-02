@@ -41,4 +41,21 @@ class ProductCategoryService{
 
     return products;
   }
+  static Future<List<Product>> getCategoryProducts(context,int catId) async{
+    List<Product> products = [];
+    http.Response response =  await http.get(Uri.parse(baseUrl+"category/$catId"),headers:<String,String>{'Content-Type': 'application/json; charset=UTF-8',});
+    if(response.statusCode==200){
+      var data = jsonDecode(response.body);
+      for(var e in data){
+        Product pro = Product.fromJSON(e);
+        pro.favourite = await SharedPrefManager.alreadyExistFavoriteItems(pro);
+        products.add(pro);
+      }
+
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: const Text("Failed to load product data",style: TextStyle(color: Colors.white),),backgroundColor: Colors.red[900],));
+    }
+
+    return products;
+  }
 }

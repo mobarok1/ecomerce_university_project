@@ -40,6 +40,7 @@ dependencies:
   get: any
   google_nav_bar: ^5.0.5
   shared_preferences: ^2.0.8
+  intl: any
 
 
 

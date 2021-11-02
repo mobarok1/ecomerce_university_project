@@ -1,20 +1,35 @@
+import 'package:ecomerce/models/client/shared_preference.dart';
 import 'package:ecomerce/models/dataClass/cart_model.dart';
+import 'package:ecomerce/models/dataClass/reponse_model.dart';
+import 'package:ecomerce/models/service/order_service.dart';
 import 'package:flutter/material.dart';
 
-class CheckoutPage extends StatelessWidget {
+class CheckoutPage extends StatefulWidget {
   final List<CartModel> cartItem;
   CheckoutPage(this.cartItem,{Key? key}) : super(key: key);
-  TextEditingController firstNameController= TextEditingController(),phoneController= TextEditingController(),addressController = TextEditingController();
+
+  @override
+  State<CheckoutPage> createState() => _CheckoutPageState();
+}
+
+class _CheckoutPageState extends State<CheckoutPage> {
+  TextEditingController firstNameController= TextEditingController(),phoneController= TextEditingController(),addressController = TextEditingController(),emailController = TextEditingController();
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
+    double total = 0;
     int i = 0;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Checkout"),
       ),
-      body: Column(
+      body: loading?Center(
+        child: CircularProgressIndicator(),
+      ):Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Flexible(
@@ -107,6 +122,28 @@ class CheckoutPage extends StatelessWidget {
                             height: 5,
                           ),
                           Container(
+                            margin: const EdgeInsets.only(left: 10,right: 10),
+                            child: TextFormField(
+                              showCursor: true,
+                              validator: (str){
+                                if(str!.isEmpty){
+                                  return "required";
+                                }else{
+                                  return null;
+                                }
+                              },
+                              controller: emailController,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                hintText: "Email",
+                              ),
+                            ),
+                          ),
+                          const Divider(
+                            height: 5,
+                          ),
+                          Container(
                             margin: EdgeInsets.only(left: 10,right: 10,bottom: 10),
                             child: TextFormField(
                               showCursor: true,
@@ -139,8 +176,9 @@ class CheckoutPage extends StatelessWidget {
                   Card(
                     elevation: 0,
                     child: Column(
-                      children: cartItem.map((e){
+                      children: widget.cartItem.map((e){
                         i++;
+                        total+=e.total;
                         return Container(
                           padding: const EdgeInsets.only(left: 10,right: 10,top: 5,bottom: 5),
                           child: Row(
@@ -174,7 +212,7 @@ class CheckoutPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("SUB TOTAL "),
-                              Text("৳ 100"),
+                              Text("৳ $total"),
                             ],
                           ),
                         ),
@@ -185,7 +223,7 @@ class CheckoutPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("DELIVERY CHARGE"),
-                              Text("৳ 100"),
+                              Text("৳ 0"),
                             ],
                           ),
                         ),
@@ -199,7 +237,7 @@ class CheckoutPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("TOTAL",style: TextStyle(fontWeight: FontWeight.bold),),
-                              Text("৳ 100",style: TextStyle(fontWeight: FontWeight.bold),),
+                              Text("৳ $total",style: TextStyle(fontWeight: FontWeight.bold),),
                             ],
                           ),
                         )
@@ -212,7 +250,9 @@ class CheckoutPage extends StatelessWidget {
           ),
           ElevatedButton.icon(
             onPressed: (){
-
+              if(formKey.currentState!.validate()){
+                  orderNow(context,total);
+              }
             },
             icon: const Icon(Icons.done_outline_outlined),
             label: const Text("Confirm Order"),
@@ -224,5 +264,42 @@ class CheckoutPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  orderNow(context,double total) async{
+    var formData ={
+    "name":firstNameController.text,
+    "email":emailController.text,
+    "phone_no":phoneController.text,
+    "shipping_address":addressController.text,
+    "amount":total,
+    "message":""
+    };
+    setState(() {
+      loading = true;
+    });
+    ResponseModel responseModel = await OrderService.createOrder(formData);
+    setState(() {
+      loading = false;
+    });
+    if(responseModel.statusCode==200){
+      showDialog(
+          context: context,
+          builder: (ctx){
+            return AlertDialog(
+              content: const Text("Order has been submitted"),
+              actions: [
+                TextButton(
+                    onPressed: (){
+                      SharedPrefManager.clearCart();
+                      Navigator.popUntil(context, (route) => route.isFirst);
+                    },
+                    child: const Text("Ok")
+                )
+              ],
+            );
+          }
+      );
+    }
   }
 }

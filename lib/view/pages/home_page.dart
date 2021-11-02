@@ -14,6 +14,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'category_products_page.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -155,21 +157,26 @@ class _HomePageState extends State<HomePage> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: categories.map((e) =>
-                      Card(
-                        margin: const EdgeInsets.only(right: 5),
-                        color: mainColor.withOpacity(.2),
-                        child:Container(
-                          width: 100,
-                          alignment: Alignment.center,
-                          child: Text(
-                            e.name,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.black.withOpacity(.7),
-                                fontWeight: FontWeight.bold,
+                      InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (ctx)=>CategoryPage(catModel: e,)));
+                        },
+                        child: Card(
+                          margin: const EdgeInsets.only(right: 5),
+                          color: mainColor.withOpacity(.2),
+                          child:Container(
+                            width: 100,
+                            alignment: Alignment.center,
+                            child: Text(
+                              e.name,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(.7),
+                                  fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ) ,
+                          ) ,
+                        ),
                       )).toList(),
                 ),
               ),

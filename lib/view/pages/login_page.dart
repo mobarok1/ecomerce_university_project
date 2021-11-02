@@ -52,8 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                 flex: 7,
                 child: Form(
                   key: formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: ListView(
                     children: <Widget>[
                       Container(
                         width: 130,
@@ -172,49 +171,43 @@ class _LoginPageState extends State<LoginPage> {
                             shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "Don't have an account? ",
+                            style: TextStyle(
+                              color: const Color(0xFF666666),
+                              fontFamily: defaultFontFamily,
+                              fontSize: defaultFontSize,
+                              fontStyle: FontStyle.normal,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => {
+                              Navigator.push(
+                                context, MaterialPageRoute(builder: (context) =>  RegisterPage()),
+                              )
+                            },
+                            child: Text(
+                              "Sign Up",
+                              style: TextStyle(
+                                color: mainColor,
+                                fontFamily: defaultFontFamily,
+                                fontSize: defaultFontSize,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
               ),
-              Flexible(
-                flex: 1,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "Don't have an account? ",
-                        style: TextStyle(
-                          color: const Color(0xFF666666),
-                          fontFamily: defaultFontFamily,
-                          fontSize: defaultFontSize,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () => {
-                          Navigator.push(
-                            context, MaterialPageRoute(builder: (context) =>  RegisterPage()),
-                          )
-                        },
-                        child: Text(
-                          "Sign Up",
-                          style: TextStyle(
-                            color: mainColor,
-                            fontFamily: defaultFontFamily,
-                            fontSize: defaultFontSize,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
             ],
           ),
         ),

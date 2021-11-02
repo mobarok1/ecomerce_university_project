@@ -101,7 +101,10 @@ class SharedPrefManager{
     return cartItems;
   }
 
-
+  static void clearCart() async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setStringList("cartItems", []);
+  }
 
   static Future<bool> alreadyExistFavoriteItems(Product product) async{
     bool alreadyExist = false;
