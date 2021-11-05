@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:ecomerce/models/client/api_client.dart';
 import 'package:ecomerce/models/dataClass/reponse_model.dart';
+import 'package:ecomerce/models/dataClass/user_model.dart';
+import 'package:ecomerce/utils/theme_data.dart';
 import 'package:http/http.dart' as http;
 class LoginRegisterService{
   static Future<ResponseModel> loginNow(Map<String,dynamic> formBody) async{
@@ -10,6 +12,8 @@ class LoginRegisterService{
     if(response.statusCode==200){
       var data = jsonDecode(response.body);
       if(data["statusCode"]=="200"){
+        UserModel _user = UserModel.fromJSON(data["userinfo"]);
+        user = _user;
         responseModel = ResponseModel(statusCode: 200, message: "Login Success");
       }else{
         responseModel = ResponseModel(statusCode: 400, message: "failed to login");

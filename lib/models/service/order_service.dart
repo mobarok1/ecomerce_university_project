@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 class OrderService{
 
-  static Future<List<OrderModel>> getOrders(context) async{
+  static Future<List<OrderModel>> getOrders(context,var userId) async{
     List<OrderModel> products = [];
-    http.Response response =  await http.get(Uri.parse(baseUrl+"orders"),headers:<String,String>{'Content-Type': 'application/json; charset=UTF-8',});
+    http.Response response =  await http.get(Uri.parse(baseUrl+"orders/$userId"),headers:<String,String>{'Content-Type': 'application/json; charset=UTF-8',});
     if(response.statusCode==200){
       var data = jsonDecode(response.body);
       for(var e in data){

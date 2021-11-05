@@ -1,5 +1,6 @@
 import 'package:ecomerce/models/dataClass/order_model.dart';
 import 'package:ecomerce/models/service/order_service.dart';
+import 'package:ecomerce/utils/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -23,7 +24,7 @@ class _OrderHistoryState extends State<OrderHistory> {
     setState(() {
       loading = true;
     });
-    orders =  await OrderService.getOrders(context);
+    orders =  await OrderService.getOrders(context,user!.id);
     setState(() {
       loading = false;
     });
@@ -35,15 +36,15 @@ class _OrderHistoryState extends State<OrderHistory> {
       appBar: AppBar(
         title: const Text("Order History"),
       ),
-      body: loading?Center(
-        child: CircularProgressIndicator(
-
-        ),
-      ): ListView(
+      body: loading?const Center(
+        child: CircularProgressIndicator(),
+      ): orders.length==0?Center(
+        child: Text("No Order Found"),
+      ):ListView(
             children: orders.map((e) =>
                 Container(
                   height: 50,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       border: Border(
                           bottom: BorderSide(
                               color: Colors.black26
@@ -55,7 +56,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                     children: [
                       Container(
                         child: Text(DateFormat("dd/MM/yyy").format(e.orderDate)),
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             left: 15,
                             right: 20
                         ),
@@ -65,7 +66,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                       ),
                       Container(
                         child: Text("${e.amount} BDT"),
-                        padding: EdgeInsets.only(left: 15,right: 20),
+                        padding: const EdgeInsets.only(left: 15,right: 20),
                       )
                     ],
                   ),

@@ -184,6 +184,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       validator: (str){
                         if(str!.isEmpty){
                           return "required";
+                        }else if(RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(str)){
+                          return "invalid email";
                         }else{
                           return null;
                         }

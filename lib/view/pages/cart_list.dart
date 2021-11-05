@@ -146,7 +146,7 @@ class _CartListPageState extends State<CartListPage> {
                 Expanded(
                     child:ElevatedButton.icon(
                       onPressed: (){
-                        if(!logged) {
+                        if(user == null) {
                           Navigator.push(context, MaterialPageRoute(builder: (ctx)=>const LoginPage()));
                         }else{
                           Navigator.push(context, MaterialPageRoute(builder: (ctx)=> CheckoutPage(items)));

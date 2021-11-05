@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
           actions: [
             IconButton(
                 onPressed: (){
-                  if(!logged) {
+                  if(user==null) {
                     Navigator.push(context, MaterialPageRoute(builder: (ctx)=>const LoginPage()));
                   }else{
                     Navigator.push(context, MaterialPageRoute(builder: (ctx)=>const ProfilePage()));

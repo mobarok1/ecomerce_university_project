@@ -1,3 +1,4 @@
+import 'package:ecomerce/utils/theme_data.dart';
 import 'package:flutter/material.dart';
 
 class PersonalInfo extends StatelessWidget {
@@ -16,49 +17,40 @@ class PersonalInfo extends StatelessWidget {
           children: [
             TextFormField(
               readOnly: true,
-              decoration: InputDecoration(
+              initialValue: user!.firstName+" "+user!.lastName,
+              decoration: const InputDecoration(
                 label: Text("Full Name"),
                 border: OutlineInputBorder(
 
                 )
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextFormField(
               readOnly: true,
-              decoration: InputDecoration(
+              initialValue: user!.email,
+              decoration: const InputDecoration(
                   label: Text("Email"),
                   border: OutlineInputBorder(
 
                   )
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextFormField(
               readOnly: true,
-              decoration: InputDecoration(
+              initialValue: user!.phoneNo,
+              decoration: const InputDecoration(
                   label: Text("Phone"),
                   border: OutlineInputBorder(
 
                   )
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              readOnly: true,
-              decoration: InputDecoration(
-                  label: Text("Address"),
-                  border: OutlineInputBorder(
-
-                  )
-              ),
-            )
           ],
         ),
       ),

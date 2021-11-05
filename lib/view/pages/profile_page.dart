@@ -23,33 +23,33 @@ class ProfilePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  //  SizedBox(
-                  //    height: 50,
-                  //    child: InkWell(
-                  //     onTap: (){
-                  //       Navigator.push(context, MaterialPageRoute(builder: (ctx)=>const PersonalInfo()));
-                  //     },
-                  //     child: Row(
-                  //       children: const [
-                  //         Padding(
-                  //             padding: EdgeInsets.only(
-                  //               left: 10, right: 10
-                  //             ),
-                  //           child: Icon(Icons.person),
-                  //         ),
-                  //         Text("Personal Information",
-                  //           style: TextStyle(
-                  //             fontSize: 15,
-                  //             fontWeight: FontWeight.bold
-                  //           ),
-                  //         )
-                  //       ],
-                  //     ),
-                  // ),
-                  //  ),
-                  // const Divider(
-                  //   height: 1,
-                  // ),
+                   SizedBox(
+                     height: 50,
+                     child: InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (ctx)=>const PersonalInfo()));
+                      },
+                      child: Row(
+                        children: const [
+                          Padding(
+                              padding: EdgeInsets.only(
+                                left: 10, right: 10
+                              ),
+                            child: Icon(Icons.person),
+                          ),
+                          Text("Personal Information",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold
+                            ),
+                          )
+                        ],
+                      ),
+                  ),
+                   ),
+                  const Divider(
+                    height: 1,
+                  ),
                   Container(
                     height: 50,
                     child: InkWell(
@@ -83,7 +83,7 @@ class ProfilePage extends StatelessWidget {
             Center(
               child: ElevatedButton.icon(
                 onPressed: (){
-                  logged = false;
+                  user = null;
                   Navigator.pop(context);
                 },
                 style: ButtonStyle(

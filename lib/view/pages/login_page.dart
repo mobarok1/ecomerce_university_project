@@ -229,7 +229,6 @@ class _LoginPageState extends State<LoginPage> {
     });
     if(responseModel.statusCode == 200){
         Navigator.pop(context);
-        logged = true;
     }else{
       ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: const Text("Failed to login"),backgroundColor: Colors.red[900],));
     }

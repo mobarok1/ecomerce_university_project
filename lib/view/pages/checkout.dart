@@ -2,6 +2,7 @@ import 'package:ecomerce/models/client/shared_preference.dart';
 import 'package:ecomerce/models/dataClass/cart_model.dart';
 import 'package:ecomerce/models/dataClass/reponse_model.dart';
 import 'package:ecomerce/models/service/order_service.dart';
+import 'package:ecomerce/utils/theme_data.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -273,7 +274,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
     "phone_no":phoneController.text,
     "shipping_address":addressController.text,
     "amount":total,
-    "message":""
+    "message":"",
+      "user_id": user!.id
     };
     setState(() {
       loading = true;
